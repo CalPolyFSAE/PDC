@@ -1,0 +1,8 @@
+*.dblite
+*.swp
+*.bak
+*.launch
+**/build
+**/Debug
+**/Release
+*.jdebug.user

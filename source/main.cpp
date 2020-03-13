@@ -17,24 +17,6 @@ using namespace BSP;
 void turn( void *pvParameters )
 {
 
-    vTaskDelay( 1000 );
-    gpio::GPIO::set(gpio::PortD, 1);
-    vTaskDelay( 1000 );
-    gpio::GPIO::set(gpio::PortD, 0);
-    vTaskDelay( 1000 );
-    gpio::GPIO::set(gpio::PortB, 7);
-    vTaskDelay( 1000 );
-    gpio::GPIO::set(gpio::PortB, 6);
-    vTaskDelay( 1000 );
-    gpio::GPIO::set(gpio::PortE, 3);
-    vTaskDelay( 1000 );
-    gpio::GPIO::set(gpio::PortD, 16);
-    vTaskDelay( 1000 );
-    gpio::GPIO::set(gpio::PortD, 15);
-    vTaskDelay( 1000 );
-    gpio::GPIO::set(gpio::PortE, 9);
-    vTaskDelay( portMAX_DELAY );
-
     for (;;)
     {
 
@@ -78,7 +60,13 @@ int main( void )
     BOARD_InitBootClocks();
     BOARD_InitBootPins();
 
-    adc::ADC::ConstructStatic(NULL);
+    gpio::GPIO::set(gpio::PortE, 10);
+    gpio::GPIO::set(gpio::PortE, 11);
+    gpio::GPIO::set(gpio::PortD, 0);
+    gpio::GPIO::set(gpio::PortD, 1);
+
+
+    while(1);
 
     // you gotta make a task right here
     xTaskCreate(lcread, "lcread", 100, NULL, 0, NULL );
