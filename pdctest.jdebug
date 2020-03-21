@@ -17,8 +17,8 @@ void OnProjectLoad (void) {
   Project.SetTargetIF ("JTAG");
   Project.SetTIFSpeed ("1 MHz");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M4F.svd");
-  Project.AddPathSubstitute ("C:/Users/grayd/home/git/PDC", "$(ProjectDir)");
-  Project.AddPathSubstitute ("c:/users/grayd/home/git/pdc", "$(ProjectDir)");
+  Project.AddPathSubstitute ("/home/gray/fsae/sw/PDC", "$(ProjectDir)");
+  Project.AddPathSubstitute ("/home/gray/fsae/sw/pdc", "$(ProjectDir)");
   //
   // User settings
   //

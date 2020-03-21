@@ -17,8 +17,13 @@ using namespace BSP;
 void turn( void *pvParameters )
 {
 
+    gpio::GPIO::clear(gpio::PortE, 10);
+
     for (;;)
     {
+
+        vTaskDelay(1000);
+        gpio::GPIO::toggle(gpio::PortE, 10);
 
     }
 }
@@ -26,31 +31,16 @@ void turn( void *pvParameters )
 
 void lcread( void *pvParameters ){
 
-	static uint16_t v[9];
+	static uint16_t v[8];
 
-	static uint16_t i[9];
+	static uint16_t i[8];
 
 	adc::ADC& adc = adc::ADC::StaticClass();
 
 	for (;;) {
 
-		v[1] = adc.read(ADC0, 9);
-		v[2] = adc.read(ADC0, 10);
-		v[3] = adc.read(ADC0, 11);
-		v[4] = adc.read(ADC0, 12);
-		v[5] = adc.read(ADC0, 13);
-		v[6] = adc.read(ADC0, 14);
-		v[7] = adc.read(ADC0, 15);
-		v[8] = adc.read(ADC0, 0);
-
-		i[1] = adc.read(ADC0, 1);
-		i[2] = adc.read(ADC0, 2);
-		i[3] = adc.read(ADC0, 3);
-		i[4] = adc.read(ADC1, 10);
-		i[5] = adc.read(ADC2, 14);
-		i[6] = adc.read(ADC1, 11);
-		i[7] = adc.read(ADC0, 7);
-		i[8] = adc.read(ADC0, 8);
+        v[0] = adc.read(ADC0, 11); // v_lc1
+        i[0] = adc.read(ADC0, 10); // i_lc1
 
 	}
 }
@@ -60,15 +50,8 @@ int main( void )
     BOARD_InitBootClocks();
     BOARD_InitBootPins();
 
-    gpio::GPIO::set(gpio::PortE, 10);
-    gpio::GPIO::set(gpio::PortE, 11);
-    gpio::GPIO::set(gpio::PortD, 0);
-    gpio::GPIO::set(gpio::PortD, 1);
+    adc::ADC::ConstructStatic(NULL);
 
-
-    while(1);
-
-    // you gotta make a task right here
     xTaskCreate(lcread, "lcread", 100, NULL, 0, NULL );
     xTaskCreate(turn, "turn", 100, NULL, 1, NULL );
     

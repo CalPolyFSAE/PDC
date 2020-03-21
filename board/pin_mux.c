@@ -7,11 +7,14 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v5.0
 processor: MKE18F512xxx16
 package_id: MKE18F512VLH16
 mcu_data: ksdk2_0
-processor_version: 4.0.0
+processor_version: 5.0.0
+pin_labels:
+- {pin_num: '20', pin_signal: ADC0_SE11/ACMP0_IN4/EXTAL32/PTC3/FTM0_CH3/CAN0_TX, label: v_lc1}
+- {pin_num: '21', pin_signal: ADC0_SE10/ACMP0_IN5/XTAL32/PTC2/FTM0_CH2/CAN0_RX, label: i_lc1}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -41,6 +44,8 @@ BOARD_InitPins:
   - {pin_num: '3', peripheral: GPIOE, signal: 'GPIO, 11', pin_signal: ADC2_SE13/PTE11/PWT_IN1/LPTMR0_ALT1/FTM2_CH5/FXIO_D5/TRGMUX_OUT5}
   - {pin_num: '2', peripheral: GPIOD, signal: 'GPIO, 0', pin_signal: ADC2_SE0/PTD0/FTM0_CH2/LPSPI1_SCK/FTM2_CH0/FXIO_D0/TRGMUX_OUT1}
   - {pin_num: '1', peripheral: GPIOD, signal: 'GPIO, 1', pin_signal: ADC2_SE1/PTD1/FTM0_CH3/LPSPI1_SIN/FTM2_CH1/FXIO_D1/TRGMUX_OUT2}
+  - {pin_num: '20', peripheral: ADC0, signal: 'SE, 11', pin_signal: ADC0_SE11/ACMP0_IN4/EXTAL32/PTC3/FTM0_CH3/CAN0_TX}
+  - {pin_num: '21', peripheral: ADC0, signal: 'SE, 10', pin_signal: ADC0_SE10/ACMP0_IN5/XTAL32/PTC2/FTM0_CH2/CAN0_RX}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -53,10 +58,18 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void)
 {
-    /* Clock Control: 0x01u */
+    /* Clock Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
+    /* Clock Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortD);
-    /* Clock Control: 0x01u */
+    /* Clock Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortE);
+
+    /* PORTC2 (pin 21) is configured as ADC0_SE10 */
+    PORT_SetPinMux(PORTC, 2U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTC3 (pin 20) is configured as ADC0_SE11 */
+    PORT_SetPinMux(PORTC, 3U, kPORT_PinDisabledOrAnalog);
 
     /* PORTD0 (pin 2) is configured as PTD0 */
     PORT_SetPinMux(PORTD, 0U, kPORT_MuxAsGpio);
