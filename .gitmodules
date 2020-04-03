@@ -1,0 +1,3 @@
+[submodule "MKELibrary"]
+	path = MKELibrary
+	url = https://github.com/CalPolyFSAE/MKELibrary

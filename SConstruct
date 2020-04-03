@@ -1,6 +1,6 @@
 #!/bin/python
 
-BSP_PATH = '../MKELibrary/'
+BSP_PATH = 'MKELibrary/'
 
 import os
 
